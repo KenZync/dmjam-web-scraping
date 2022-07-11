@@ -8,8 +8,13 @@ https://docs.google.com/spreadsheets/d/1P4k_rv7zVDAXB2m-D-wJNpAGdjo40F5cphzkaiT8
 
 How to Use
 
+hot reload
 ```
 npm start
+```
+or
+```
+node index.js
 ```
 
 # NORMAL ENDPOINTS
