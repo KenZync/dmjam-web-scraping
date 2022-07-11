@@ -1,5 +1,9 @@
 # dmjam-web-scraping
 
+Visualized Data
+
+https://docs.google.com/spreadsheets/d/1P4k_rv7zVDAXB2m-D-wJNpAGdjo40F5cphzkaiT8Jjk/edit?usp=sharing
+
 How to Use
 
 npm start
