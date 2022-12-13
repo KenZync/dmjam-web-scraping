@@ -8,8 +8,9 @@
     "Miss": "96",
     "MaxCombo": "749",
     "Acc": "72.89%",
-    "Progress": "D",
-    "Clear": "Clear"
+    "Progress": "D Rank",
+    "Clear": "Cleared",
+    "PlayTime": "2022-01-23 22:26:08"
   },
   {
     "UserID": "1168",
@@ -20,8 +21,22 @@
     "Miss": "137",
     "MaxCombo": "295",
     "Acc": "72.12%",
-    "Progress": "D",
-    "Clear": "Clear"
+    "Progress": "D Rank",
+    "Clear": "Cleared",
+    "PlayTime": "2022-06-01 16:15:16"
+  },
+  {
+    "UserID": "1166",
+    "Nickname": "Delly.K",
+    "Cool": "3322",
+    "Good": "1000",
+    "Bad": "23",
+    "Miss": "112",
+    "MaxCombo": "454",
+    "Acc": "6.58%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-09-05 23:03:56"
   },
   {
     "UserID": "136",
@@ -32,8 +47,9 @@
     "Miss": "108",
     "MaxCombo": "454",
     "Acc": "6.32%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-01-30 16:13:36"
   },
   {
     "UserID": "72",
@@ -44,20 +60,22 @@
     "Miss": "95",
     "MaxCombo": "610",
     "Acc": "5.92%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-05-03 22:56:45"
   },
   {
     "UserID": "1169",
     "Nickname": "Nori",
-    "Cool": "1845",
-    "Good": "793",
-    "Bad": "43",
-    "Miss": "77",
-    "MaxCombo": "335",
-    "Acc": "4.01%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Cool": "2136",
+    "Good": "901",
+    "Bad": "37",
+    "Miss": "76",
+    "MaxCombo": "373",
+    "Acc": "4.62%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-11-14 23:05:06"
   },
   {
     "UserID": "2260",
@@ -68,8 +86,9 @@
     "Miss": "81",
     "MaxCombo": "278",
     "Acc": "3.13%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-05-05 19:52:47"
   },
   {
     "UserID": "6432",
@@ -80,8 +99,22 @@
     "Miss": "70",
     "MaxCombo": "370",
     "Acc": "2.71%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-05-26 11:07:01"
+  },
+  {
+    "UserID": "5561",
+    "Nickname": "베리",
+    "Cool": "1357",
+    "Good": "333",
+    "Bad": "27",
+    "Miss": "60",
+    "MaxCombo": "207",
+    "Acc": "2.57%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-12-03 03:07:25"
   },
   {
     "UserID": "148",
@@ -92,8 +125,22 @@
     "Miss": "63",
     "MaxCombo": "364",
     "Acc": "2.42%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2021-12-28 16:05:02"
+  },
+  {
+    "UserID": "5626",
+    "Nickname": "anti",
+    "Cool": "1177",
+    "Good": "335",
+    "Bad": "4",
+    "Miss": "65",
+    "MaxCombo": "385",
+    "Acc": "2.3%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-08-01 00:26:23"
   },
   {
     "UserID": "1200",
@@ -104,8 +151,35 @@
     "Miss": "57",
     "MaxCombo": "335",
     "Acc": "2.05%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-01-23 18:42:46"
+  },
+  {
+    "UserID": "5585",
+    "Nickname": "ShinSa",
+    "Cool": "981",
+    "Good": "330",
+    "Bad": "7",
+    "Miss": "60",
+    "MaxCombo": "262",
+    "Acc": "1.99%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-10-26 23:34:36"
+  },
+  {
+    "UserID": "5673",
+    "Nickname": "allen poknat",
+    "Cool": "0",
+    "Good": "0",
+    "Bad": "0",
+    "Miss": "34",
+    "MaxCombo": "0",
+    "Acc": "0.0%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-10-13 20:00:35"
   },
   {
     "UserID": "2324",
@@ -116,7 +190,8 @@
     "Miss": "34",
     "MaxCombo": "0",
     "Acc": "0.0%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-01-16 22:54:10"
   }
 ]

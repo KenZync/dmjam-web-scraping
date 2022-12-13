@@ -1,25 +1,165 @@
 const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const bodyParser = require("body-parser");
 const fs = require("fs");
-
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+//Download Ranking into HTML File
+app.get("/ranking", (req, res) => {
+  const url = "https://dpjam.net/ranking";
+  axios.get(url).then(({ data }) => {
+    fs.writeFileSync("data/ranking.html", data, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  });
+  console.log("Successfully written ranking to file");
+  res.sendStatus(200);
+});
 
-app.get("/fetch-music", (req, res) => {
-  const url = "https://dpjam.net/music?keyword=&option=0&lvl-min=&lvl-max=";
+//Change Username to ID
+// app.get("/user/:name", (req, res) => {
+//   const reqName = req.params.name;
+//   const ranking = fs.readFileSync("data/ranking.html", { encoding: "utf8" });
+//   const $ = cheerio.load(ranking);
+//   const sel = "div.table-responsive-lg > table > tbody > tr";
+//   let found = false;
+//   $(sel).each(function () {
+//     $(this)
+//       .find("a")
+//       .each(function (i, name) {
+//         if (reqName == $(name).text()) {
+//           const id = $(name).attr("href").match(/\d+/)[0];
+//           found = true;
+//           return res.json({ id: id });
+//         }
+//       });
+//   });
+//   if (found == false) {
+//     return res.sendStatus(404);
+//   }
+// });
+
+//change Username to ID
+function getID(reqName) {
+  const ranking = fs.readFileSync("data/ranking.html", { encoding: "utf8" });
+  const $ = cheerio.load(ranking);
+  const sel = "div.table-responsive-lg > table > tbody > tr";
+  let finalID = 0;
+  $(sel).each(function () {
+    $(this)
+      .find("a")
+      .each(function (i, name) {
+        if (reqName == $(name).text()) {
+          const id = $(name).attr("href").match(/\d+/)[0];
+          finalID = id;
+          return;
+        }
+      });
+  });
+  if (finalID != 0) {
+    return finalID;
+  }
+}
+
+//Download Score
+app.get("/score/:name", (req, res) => {
+  const reqName = req.params.name;
+  const id = getID(reqName);
+  const url = "https://dpjam.net/player-scoreboard/" + id + "/2";
   axios.get(url).then(({ data }) => {
     const $ = cheerio.load(data);
     const musics = [];
-    const sel = "div.container-fluid > table > tbody > tr";
+    const sel = "div.table-responsive-lg > table > tbody > tr";
+    const keys = [
+      "Rank",
+      "Title",
+      "Acc",
+      "Progress",
+      "Clear",
+      "Rank",
+      "Level",
+      "PlayTime",
+    ];
+    $(sel).each(function () {
+      $(sel).each(function () {
+        let keyIndex = 0;
+        const musicDetails = {};
+        $(this)
+          .find("a")
+          .each(function (i, link) {
+            musicDetails[keys[keyIndex]] = $(link).attr("href").match(/\d+/)[0];
+            keyIndex++;
+          });
+
+        $(this)
+          .find("td")
+          .each(function () {
+            musicDetails[keys[keyIndex]] = $(this).text().trim();
+            keyIndex++;
+          });
+        musics.push(musicDetails);
+      });
+      fs.writeFileSync(
+        "data/" + id + ".json",
+        JSON.stringify(musics, null, 2),
+        {
+          encoding: "utf8",
+          flag: "w",
+        },
+        (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        }
+      );
+    });
+  });
+  console.log("Successfully written ranking to file");
+
+  res.sendStatus(200);
+});
+
+app.get("/compare/:name1/:name2", (req, res) => {
+  const firstName = req.params.name1;
+  const secondName = req.params.name2;
+  const id1 = getID(firstName);
+  const id2 = getID(secondName);
+
+  let win1 = []
+
+  let rawScore1 = fs.readFileSync("data/"+id1+".json");
+  let rawScore2 = fs.readFileSync("data/"+id2+".json");
+  let scoreSet1 = JSON.parse(rawScore1);
+  let scoreSet2 = JSON.parse(rawScore2);
+
+  scoreSet1.forEach( score1 => {
+    let found = false
+    scoreSet2.forEach( score2 => {
+      if(score1.Title == score2.Title){
+        found = true
+        if(parseInt(score1.Rank) > parseInt(score2.Rank)){
+          win1.push(score1)
+        }
+      }
+    })
+    if(!found){
+      win1.push(score1)
+    }
+  } )
+  return res.json(win1);
+});
+
+app.get("/fetch-music", (req, res) => {
+  const url = "https://dpjam.net/music?keyword=&option=0&level-min=&level-max=";
+  axios.get(url).then(({ data }) => {
+    const $ = cheerio.load(data);
+    const musics = [];
+    const sel = "table > tbody > tr";
     const keys = ["MusicID", "Title", "Artist", "NoteCharter", "Level", "BPM"];
 
     $(sel).each(function () {
@@ -59,7 +199,8 @@ app.get("/fetch-music", (req, res) => {
   });
 });
 
-app.get("/score/:musicid/:difficulty", (req, res) => {
+//Get all scores in a song Hard Difficulty
+app.get("/scoreboard/:musicid/:difficulty", (req, res) => {
   var requestedMusicID = req.params.musicid;
   var requestedDifficulty = req.params.difficulty;
   const url =
@@ -70,7 +211,7 @@ app.get("/score/:musicid/:difficulty", (req, res) => {
   axios.get(url).then(({ data }) => {
     const $ = cheerio.load(data);
     const scores = [];
-    const sel = "div.container-fluid > table > tbody > tr";
+    const sel = "table > tbody > tr";
     const keys = [
       "UserID",
       "Nickname",
@@ -82,8 +223,8 @@ app.get("/score/:musicid/:difficulty", (req, res) => {
       "Acc",
       "Progress",
       "Clear",
+      "PlayTime",
     ];
-
     $(sel).each(function (parentIndex, parentElem) {
       let keyIndex = 0;
       const scoreDetails = {};
@@ -114,7 +255,7 @@ async function getScores(urls){
         const musicID = response.config.url.match(/\d+/)[0];
         const $ = cheerio.load(response.data);
         const scores = [];
-        const sel = "div.container-fluid > table > tbody > tr";
+        const sel = "table > tbody > tr";
         const keys = [
           "UserID",
           "Nickname",
@@ -126,44 +267,64 @@ async function getScores(urls){
           "Acc",
           "Progress",
           "Clear",
+          "PlayTime",
         ]
 
-        const selCounts = "div.container-fluid > div.info-header > h4"
+        $(sel).each(function (parentIndex, parentElem) {
+          let keyIndex = 0;
+          const scoreDetails = {};
+          $(this)
+            .find("a")
+            .each(function (i, link) {
+              scoreDetails[keys[keyIndex]] = $(link).attr("href").match(/\d+/)[0];
+              keyIndex++;
+            });
+    
+          $(this)
+            .find("td")
+            .each(function (i, e) {
+              scoreDetails[keys[keyIndex]] = $(this).text().trim();
+              keyIndex++;
+            });
+          scores.push(scoreDetails);
+        });
 
-        $(selCounts).each(function () {
-          const counts = $(this).find('br').get(0).nextSibling.nodeValue.match(/\d+/)[0]
-          if(counts){
-            let rawdata = fs.readFileSync("data/musics.json");
-            let musics = JSON.parse(rawdata);
+        
+        // const selCounts = "div.container-fluid > div.info-header > h4"
 
-            musics.forEach((music) => {
-              if(music.MusicID == musicID){
-                music.PlayCount = parseInt(counts)
-              }
-            }
-            )
-            fs.writeFileSync(
-              "data/musics.json",
-              JSON.stringify(musics, null, 2),
-              {
-                encoding: "utf8",
-                flag: "w",
-              },
-              (err) => {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-              }
-            )
-            
+        // $(selCounts).each(function () {
+        //   const counts = $(this).find('br').get(0).nextSibling.nodeValue.match(/\d+/)[0]
+        //   if(counts){
+        //     let rawdata = fs.readFileSync("data/musics.json");
+        //     let musics = JSON.parse(rawdata);
 
-            // data=musicID+","+counts+"\n"
-            // fs.appendFile('data/playcount/playcount.txt', data, (err) => {
-            //   if (err) throw err;
-            // });
-          }
-        })
+        //     musics.forEach((music) => {
+        //       if(music.MusicID == musicID){
+        //         music.PlayCount = parseInt(counts)
+        //       }
+        //     }
+        //     )
+        //     fs.writeFileSync(
+        //       "data/musics.json",
+        //       JSON.stringify(musics, null, 2),
+        //       {
+        //         encoding: "utf8",
+        //         flag: "w",
+        //       },
+        //       (err) => {
+        //         if (err) {
+        //           console.error(err);
+        //           return;
+        //         }
+        //       }
+        //     )
+
+        //     // data=musicID+","+counts+"\n"
+        //     // fs.appendFile('data/playcount/playcount.txt', data, (err) => {
+        //     //   if (err) throw err;
+        //     // });
+        //   }
+        // })
 
         // $(sel).each(function () {
         //   let keyIndex = 0;
@@ -171,7 +332,7 @@ async function getScores(urls){
         //   $(this)
         //     .find("a")
         //     .each(function (i, link) {
-              
+
         //       scoreDetails[keys[keyIndex]] = $(link).attr("href").match(/\d+/)[0];
         //       keyIndex++;
         //     });
@@ -183,21 +344,21 @@ async function getScores(urls){
         //     });
         //   scores.push(scoreDetails);
         // });
-        //   fs.writeFileSync(
-        //     "data/score/" + musicID + ".json",
-        //     JSON.stringify(scores, null, 2),
-        //     {
-        //       encoding: "utf8",
-        //       flag: "w",
-        //     },
-        //     (err) => {
-        //       if (err) {
-        //         console.log(musicID);
-        //         console.error(err);
-        //         return;
-        //       }
-        //     }
-        //   );
+          fs.writeFileSync(
+            "data/score/" + musicID + ".json",
+            JSON.stringify(scores, null, 2),
+            {
+              encoding: "utf8",
+              flag: "w",
+            },
+            (err) => {
+              if (err) {
+                console.log(musicID);
+                console.error(err);
+                return;
+              }
+            }
+          );
       })
 
     })
@@ -218,7 +379,6 @@ app.get("/fetch-score", async (req, res) => {
       musicList.push("https://dpjam.net/music-scoreboard/" + element.MusicID);
     });
 
-
   let result = [];
   musicList.forEach((x,y,z) => !(y % 300) ? result.push(z.slice(y, y + 300)) : '');
   // console.log(result.length)
@@ -227,46 +387,42 @@ app.get("/fetch-score", async (req, res) => {
     // console.log(result[i].length)
     await getScores(result[i]);
   }
-  
+
   res.sendStatus(200);
 });
 
-app.get("/visualize", (req, res) => {
-  let rawdata = fs.readFileSync("data/musics.json");
-  let musics = JSON.parse(rawdata);
-  let scoreData = [];
-  musics.forEach((music) => { 
-    let rawScoreData = fs.readFileSync("data/score/" + music.MusicID + ".json");
-    let scores = JSON.parse(rawScoreData)
-    scores.forEach((score) => {
+// app.get("/visualize", (req, res) => {
+//   let rawdata = fs.readFileSync("data/musics.json");
+//   let musics = JSON.parse(rawdata);
+//   let scoreData = [];
+//   musics.forEach((music) => {
+//     let rawScoreData = fs.readFileSync("data/score/" + music.MusicID + ".json");
+//     let scores = JSON.parse(rawScoreData)
+//     scores.forEach((score) => {
 
-      var index = scoreData.findIndex(function(item, i){
-        return item.Level === music.Level
-      });
-      if(index!=-1){
-        if(score.Clear === "Clear"){
-          scoreData[index].Clear++;
-        }else{
-          scoreData[index].Failed++;
-        }
-      }else{
-        scoreData.push({
-          Level: music.Level,
-          Clear: 0,
-          Failed: 0,
-        })
-      }
-    })
+//       var index = scoreData.findIndex(function(item, i){
+//         return item.Level === music.Level
+//       });
+//       if(index!=-1){
+//         if(score.Clear === "Clear"){
+//           scoreData[index].Clear++;
+//         }else{
+//           scoreData[index].Failed++;
+//         }
+//       }else{
+//         scoreData.push({
+//           Level: music.Level,
+//           Clear: 0,
+//           Failed: 0,
+//         })
+//       }
+//     })
 
+//   })
+//   res.json(scoreData);
 
-
-  })
-  res.json(scoreData);
-
-})
+// })
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-

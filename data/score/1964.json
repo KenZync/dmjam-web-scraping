@@ -2,14 +2,15 @@
   {
     "UserID": "1168",
     "Nickname": "자드",
-    "Cool": "5014",
-    "Good": "1260",
-    "Bad": "29",
-    "Miss": "133",
-    "MaxCombo": "452",
-    "Acc": "7.41%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Cool": "4640",
+    "Good": "1740",
+    "Bad": "39",
+    "Miss": "134",
+    "MaxCombo": "789",
+    "Acc": "7.53%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-08-14 21:56:05"
   },
   {
     "UserID": "1218",
@@ -20,8 +21,22 @@
     "Miss": "113",
     "MaxCombo": "983",
     "Acc": "7.2%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2020-12-21 03:46:02"
+  },
+  {
+    "UserID": "80",
+    "Nickname": "쵸익",
+    "Cool": "4117",
+    "Good": "1362",
+    "Bad": "47",
+    "Miss": "133",
+    "MaxCombo": "584",
+    "Acc": "6.47%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-10-14 23:14:10"
   },
   {
     "UserID": "5358",
@@ -32,20 +47,9 @@
     "Miss": "126",
     "MaxCombo": "459",
     "Acc": "5.43%",
-    "Progress": "F",
-    "Clear": "Failed"
-  },
-  {
-    "UserID": "80",
-    "Nickname": "쵸익",
-    "Cool": "3567",
-    "Good": "881",
-    "Bad": "34",
-    "Miss": "127",
-    "MaxCombo": "415",
-    "Acc": "5.25%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2020-12-21 03:48:53"
   },
   {
     "UserID": "1169",
@@ -56,8 +60,9 @@
     "Miss": "47",
     "MaxCombo": "104",
     "Acc": "0.95%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-01-17 21:54:34"
   },
   {
     "UserID": "148",
@@ -68,8 +73,9 @@
     "Miss": "41",
     "MaxCombo": "118",
     "Acc": "0.84%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-01-23 23:06:01"
   },
   {
     "UserID": "5926",
@@ -80,20 +86,9 @@
     "Miss": "32",
     "MaxCombo": "5",
     "Acc": "0.04%",
-    "Progress": "F",
-    "Clear": "Failed"
-  },
-  {
-    "UserID": "2260",
-    "Nickname": "짜이우",
-    "Cool": "0",
-    "Good": "0",
-    "Bad": "0",
-    "Miss": "34",
-    "MaxCombo": "0",
-    "Acc": "0.0%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2021-01-31 11:53:49"
   },
   {
     "UserID": "5673",
@@ -104,7 +99,21 @@
     "Miss": "34",
     "MaxCombo": "0",
     "Acc": "0.0%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-07-10 15:35:53"
+  },
+  {
+    "UserID": "2260",
+    "Nickname": "짜이우",
+    "Cool": "0",
+    "Good": "0",
+    "Bad": "0",
+    "Miss": "34",
+    "MaxCombo": "0",
+    "Acc": "0.0%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-04-08 21:13:30"
   }
 ]

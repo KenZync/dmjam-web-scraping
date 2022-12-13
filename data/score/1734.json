@@ -2,14 +2,15 @@
   {
     "UserID": "1168",
     "Nickname": "자드",
-    "Cool": "3506",
-    "Good": "1027",
-    "Bad": "49",
-    "Miss": "124",
-    "MaxCombo": "811",
-    "Acc": "22.4%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Cool": "3464",
+    "Good": "1169",
+    "Bad": "19",
+    "Miss": "128",
+    "MaxCombo": "703",
+    "Acc": "36.84%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-09-12 20:21:31"
   },
   {
     "UserID": "1169",
@@ -20,8 +21,9 @@
     "Miss": "48",
     "MaxCombo": "194",
     "Acc": "2.04%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-05-30 19:31:55"
   },
   {
     "UserID": "72",
@@ -32,8 +34,35 @@
     "Miss": "48",
     "MaxCombo": "184",
     "Acc": "1.58%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2020-11-10 01:45:24"
+  },
+  {
+    "UserID": "5677",
+    "Nickname": "kimth",
+    "Cool": "422",
+    "Good": "237",
+    "Bad": "38",
+    "Miss": "41",
+    "MaxCombo": "122",
+    "Acc": "1.19%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-07-19 21:51:54"
+  },
+  {
+    "UserID": "3327",
+    "Nickname": "WNCC",
+    "Cool": "401",
+    "Good": "232",
+    "Bad": "24",
+    "Miss": "36",
+    "MaxCombo": "108",
+    "Acc": "1.14%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-08-18 10:21:35"
   },
   {
     "UserID": "148",
@@ -44,8 +73,9 @@
     "Miss": "41",
     "MaxCombo": "76",
     "Acc": "1.08%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2021-05-30 14:45:27"
   },
   {
     "UserID": "5767",
@@ -56,8 +86,9 @@
     "Miss": "42",
     "MaxCombo": "121",
     "Acc": "1.0%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2021-02-09 19:56:36"
   },
   {
     "UserID": "2260",
@@ -68,20 +99,22 @@
     "Miss": "40",
     "MaxCombo": "123",
     "Acc": "0.91%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-06-03 16:29:08"
   },
   {
-    "UserID": "3327",
-    "Nickname": "WNCC",
-    "Cool": "194",
-    "Good": "183",
-    "Bad": "32",
+    "UserID": "5799",
+    "Nickname": "Tots",
+    "Cool": "0",
+    "Good": "0",
+    "Bad": "0",
     "Miss": "34",
-    "MaxCombo": "44",
-    "Acc": "0.68%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "MaxCombo": "0",
+    "Acc": "0.0%",
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-12-06 21:15:34"
   },
   {
     "UserID": "5673",
@@ -92,7 +125,8 @@
     "Miss": "34",
     "MaxCombo": "0",
     "Acc": "0.0%",
-    "Progress": "F",
-    "Clear": "Failed"
+    "Progress": "F Rank",
+    "Clear": "Failed",
+    "PlayTime": "2022-07-10 15:23:38"
   }
 ]
