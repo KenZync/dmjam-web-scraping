@@ -24,50 +24,45 @@ app.get("/ranking", (req, res) => {
 app.get("/user-ranking", (req, res) => {
   const reqName = req.params.name;
   const id = getID(reqName);
-  const url = "https://dpjam.net/ranking"
+  const url = "https://dpjam.net/ranking";
   axios.get(url).then(({ data }) => {
     const $ = cheerio.load(data);
     const musics = [];
     const sel = "div.table-responsive-lg > table > tbody > tr";
-    const keys = [
-      "UserID",
-      "Nickname",
-      "Tier",
-      "Clear",
-    ];
-      $(sel).each(function () {
-        let keyIndex = 0;
-        const musicDetails = {};
-        $(this)
-          .find("a")
-          .each(function (i, link) {
-            musicDetails[keys[keyIndex]] = $(link).attr("href").match(/\d+/)[0];
-            keyIndex++;
-          });
+    const keys = ["UserID", "Nickname", "Tier", "Clear"];
+    $(sel).each(function () {
+      let keyIndex = 0;
+      const musicDetails = {};
+      $(this)
+        .find("a")
+        .each(function (i, link) {
+          musicDetails[keys[keyIndex]] = $(link).attr("href").match(/\d+/)[0];
+          keyIndex++;
+        });
 
-        $(this)
-          .find("td")
-          .each(function () {
-            musicDetails[keys[keyIndex]] = $(this).text().trim();
-            keyIndex++;
-          });
-        musics.push(musicDetails);
-      });
-      fs.writeFileSync( "data/users.json",
-        // "data/" + id + ".json",
-        JSON.stringify(musics, null, 2),
-        {
-          encoding: "utf8",
-          flag: "w",
-        },
-        (err) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
+      $(this)
+        .find("td")
+        .each(function () {
+          musicDetails[keys[keyIndex]] = $(this).text().trim();
+          keyIndex++;
+        });
+      musics.push(musicDetails);
+    });
+    fs.writeFileSync(
+      "data/users.json",
+      // "data/" + id + ".json",
+      JSON.stringify(musics, null, 2),
+      {
+        encoding: "utf8",
+        flag: "w",
+      },
+      (err) => {
+        if (err) {
+          console.error(err);
+          return;
         }
-      );
-
+      }
+    );
   });
   console.log("Successfully written ranking to file");
 
@@ -184,27 +179,27 @@ app.get("/compare/:name1/:name2", (req, res) => {
   const id1 = getID(firstName);
   const id2 = getID(secondName);
 
-  let win1 = []
+  let win1 = [];
 
-  let rawScore1 = fs.readFileSync("data/"+id1+".json");
-  let rawScore2 = fs.readFileSync("data/"+id2+".json");
+  let rawScore1 = fs.readFileSync("data/" + id1 + ".json");
+  let rawScore2 = fs.readFileSync("data/" + id2 + ".json");
   let scoreSet1 = JSON.parse(rawScore1);
   let scoreSet2 = JSON.parse(rawScore2);
 
-  scoreSet1.forEach( score1 => {
-    let found = false
-    scoreSet2.forEach( score2 => {
-      if(score1.Title == score2.Title){
-        found = true
-        if(parseInt(score1.Rank) > parseInt(score2.Rank)){
-          win1.push(score1)
+  scoreSet1.forEach((score1) => {
+    let found = false;
+    scoreSet2.forEach((score2) => {
+      if (score1.Title == score2.Title) {
+        found = true;
+        if (parseInt(score1.Rank) > parseInt(score2.Rank)) {
+          win1.push(score1);
         }
       }
-    })
-    if(!found){
-      win1.push(score1)
+    });
+    if (!found) {
+      win1.push(score1);
     }
-  } )
+  });
   return res.json(win1);
 });
 
@@ -301,9 +296,9 @@ app.get("/scoreboard/:musicid/:difficulty", (req, res) => {
   });
 });
 
-async function getScores(urls){
+async function getScores(urls) {
   await axios
-    .all(urls.map((url) =>axios.get(url)))
+    .all(urls.map((url) => axios.get(url)))
     .then((data) => {
       data.forEach((response) => {
         const musicID = response.config.url.match(/\d+/)[0];
@@ -322,7 +317,7 @@ async function getScores(urls){
           "Progress",
           "Clear",
           "PlayTime",
-        ]
+        ];
 
         $(sel).each(function (parentIndex, parentElem) {
           let keyIndex = 0;
@@ -330,10 +325,12 @@ async function getScores(urls){
           $(this)
             .find("a")
             .each(function (i, link) {
-              scoreDetails[keys[keyIndex]] = $(link).attr("href").match(/\d+/)[0];
+              scoreDetails[keys[keyIndex]] = $(link)
+                .attr("href")
+                .match(/\d+/)[0];
               keyIndex++;
             });
-    
+
           $(this)
             .find("td")
             .each(function (i, e) {
@@ -343,7 +340,6 @@ async function getScores(urls){
           scores.push(scoreDetails);
         });
 
-        
         // const selCounts = "div.container-fluid > div.info-header > h4"
 
         // $(selCounts).each(function () {
@@ -398,28 +394,28 @@ async function getScores(urls){
         //     });
         //   scores.push(scoreDetails);
         // });
-          fs.writeFileSync(
-            "data/score/" + musicID + ".json",
-            JSON.stringify(scores, null, 2),
-            {
-              encoding: "utf8",
-              flag: "w",
-            },
-            (err) => {
-              if (err) {
-                console.log(musicID);
-                console.error(err);
-                return;
-              }
+        fs.writeFileSync(
+          "data/score/" + musicID + ".json",
+          JSON.stringify(scores, null, 2),
+          {
+            encoding: "utf8",
+            flag: "w",
+          },
+          (err) => {
+            if (err) {
+              console.log(musicID);
+              console.error(err);
+              return;
             }
-          );
-      })
-
+          }
+        );
+      });
     })
     .catch((error) => {
-      console.log(error)
-    }).then(()=>{
-      console.log("Fetch Done")
+      console.log(error);
+    })
+    .then(() => {
+      console.log("Fetch Done");
     });
 }
 
@@ -430,11 +426,13 @@ app.get("/fetch-score", async (req, res) => {
   let musicList = [];
 
   musics.forEach((element) => {
-      musicList.push("https://dpjam.net/music-scoreboard/" + element.MusicID);
-    });
+    musicList.push("https://dpjam.net/music-scoreboard/" + element.MusicID);
+  });
 
   let result = [];
-  musicList.forEach((x,y,z) => !(y % 300) ? result.push(z.slice(y, y + 300)) : '');
+  musicList.forEach((x, y, z) =>
+    !(y % 300) ? result.push(z.slice(y, y + 300)) : ""
+  );
   // console.log(result.length)
   // result.forEach((x) => console.log(x.length));
   for (let i = 0; i < result.length; i++) {
@@ -476,6 +474,69 @@ app.get("/fetch-score", async (req, res) => {
 //   res.json(scoreData);
 
 // })
+
+app.get("/analyze", (req, res) => {
+  let rawdata = fs.readFileSync("data/musics.json");
+  let musics = JSON.parse(rawdata);
+
+  let rawdata2 = fs.readFileSync("data/users.json");
+  let userlist = JSON.parse(rawdata2);
+
+  musics.forEach((music) => {
+    let rawScoreData = fs.readFileSync("data/score/" + music.MusicID + ".json");
+    let scores = JSON.parse(rawScoreData);
+    let userClearLevel = 0;
+    let userClearLevelCount = 0;
+
+    let userDRank = 0;
+    let userDRankCount = 0;
+
+    let userLowestClear = [];
+
+    scores.forEach((score) => {
+      if (score.Clear === "Cleared") {
+        let user = userlist.filter(function (element) {
+          return element.UserID === score.UserID;
+        });
+        let userLevel = parseInt(user[0].Clear);
+        if (userLevel != 0) {
+          userClearLevel = userClearLevel + userLevel;
+          userClearLevelCount++;
+
+          userLowestClear.push(userLevel);
+
+          if (score.Progress === "D Rank") {
+            userDRank = userDRank + userLevel;
+            userDRankCount++;
+          }
+        }
+      }
+    });
+
+    let avgClear = userClearLevel / userClearLevelCount;
+    let avgDrank = userDRank / userDRankCount;
+
+    music.AvgClear = Math.round(avgClear);
+    music.AvgDRank = Math.round(avgDrank);
+    music.LowestClear = Math.min(...userLowestClear);
+  });
+
+  fs.writeFileSync(
+    "data/analyzed.json",
+    JSON.stringify(musics, null, 2),
+    {
+      encoding: "utf8",
+      flag: "w",
+    },
+    (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
+  res.json(musics);
+});
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Example app listening at http://localhost:${port}`);
