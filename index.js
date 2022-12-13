@@ -31,7 +31,6 @@ app.get("/user-ranking", (req, res) => {
     const sel = "div.table-responsive-lg > table > tbody > tr";
     const keys = [
       "UserID",
-      "Rank",
       "Nickname",
       "Tier",
       "Clear",
